@@ -12,12 +12,12 @@ const productData = {
         image: "assets/roblox.png",
         currency: "Robux",
         products: [
-            { amount: 100, price: 18000 },
-            { amount: 200, price: 36000 },
-            { amount: 300, price: 54000, bestSeller: true },
-            { amount: 400, price: 72000 },
-            { amount: 500, price: 90000 },
-            { amount: 600, price: 108000 }
+            { amount: 80, price: 15000 },
+            { amount: 160, price: 29000 },
+            { amount: 400, price: 69000, bestSeller: true },
+            { amount: 800, price: 135000 },
+            { amount: 1700, price: 269000 },
+            { amount: 4500, price: 679000 }
         ]
     },
 
@@ -340,7 +340,55 @@ function initializeFormSubmit() {
    WHATSAPP
 ========================================================= */
 
+function sendWhatsApp(username) {
 
+    const message = `
+Halo Admin TopUpCode
+
+Saya ingin melakukan topup.
+
+━━━━━━━━━━━━━━
+KODE PESANAN
+${orderCode}
+
+GAME
+${selectedGame}
+
+USER ID / USERNAME
+${username}
+
+NOMINAL
+${selectedNominal.amount} ${selectedNominal.currency}
+
+METODE PEMBAYARAN
+${selectedPayment}
+
+TOTAL
+${formatRupiah(selectedNominal.price)}
+━━━━━━━━━━━━━━
+
+Mohon diproses.
+Terima kasih.
+`;
+
+    const phoneNumber = "6282386775387";
+
+    const whatsappURL =
+`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+database.ref("orders/" + orderCode).set({
+    orderCode,
+    game: selectedGame,
+    user: username,
+    nominal: `${selectedNominal.amount} ${selectedNominal.currency}`,
+    payment: selectedPayment,
+    total: selectedNominal.price,
+    status: "Pending",
+    createdAt: Date.now()
+});
+
+window.location.href = whatsappURL;
+}
 
 /* =========================================================
    TOAST
