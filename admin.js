@@ -6,7 +6,7 @@ database.ref("orders").on("value", (snapshot) => {
     const data = snapshot.val();
 
     if (!data) {
-        ordersContainer.innerHTML = `
+        ordersContainer.innerHTML = '
         <div class="order-card">
             Belum ada pesanan masuk.
         </div>
@@ -61,7 +61,7 @@ database.ref("orders").on("value", (snapshot) => {
 function updateStatus(orderId, status) {
 
     database.ref("orders/" + orderId).update({
-        status: selesai
+        status: status
     });
 
 }
